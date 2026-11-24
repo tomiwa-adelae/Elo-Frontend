@@ -6,15 +6,21 @@ import * as React from "react"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { useAuth } from "@/components/providers/auth-provider"
-import { AuthField, AuthShell, authButton, safeNext } from "@/components/auth/auth-shell"
+import { AuthField, AuthShell, GoogleButton, authButton, safeNext } from "@/components/auth/auth-shell"
 import { errorMessage } from "@/lib/api"
 
-export function LoginForm({ next }: { next?: string }) {
+export function LoginForm({ next, error }: { next?: string; error?: string }) {
   const router = useRouter()
   const { login } = useAuth()
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
   const [busy, setBusy] = React.useState(false)
+
+  React.useEffect(() => {
+    if (error === "google_failed") {
+      toast.error("Google sign-in didn't work. Please try again or use your email.")
+    }
+  }, [error])
 
   return (
     <AuthShell
@@ -28,6 +34,7 @@ export function LoginForm({ next }: { next?: string }) {
         </>
       }
     >
+      <GoogleButton />
       <form
         className="space-y-4"
         onSubmit={async (e) => {

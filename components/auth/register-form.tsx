@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import * as React from "react"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
-import { AuthField, AuthShell, authButton } from "@/components/auth/auth-shell"
+import { AuthField, AuthShell, GoogleButton, authButton } from "@/components/auth/auth-shell"
 import { api, errorMessage } from "@/lib/api"
 
 export function RegisterForm({ next }: { next?: string }) {
@@ -33,6 +33,7 @@ export function RegisterForm({ next }: { next?: string }) {
         </>
       }
     >
+      <GoogleButton label="Sign up with Google" />
       <form
         className="space-y-4"
         onSubmit={async (e) => {
